@@ -1,0 +1,15 @@
+# Android / Gradle build artifacts
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
+captures/
+
+# Signing material (never commit keystores or passwords)
+*.jks
+*.keystore
+keystore.properties
+
+# Staging / scratch
+shot*.png
