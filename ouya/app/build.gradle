@@ -7,6 +7,21 @@ repositories {
 android {
     compileSdkVersion 30
 
+    // Release signing — credentials live in keystore.properties (gitignored, not in VCS).
+    signingConfigs {
+        release {
+            def kpFile = rootProject.file('keystore.properties')
+            if (kpFile.exists()) {
+                def kp = new Properties()
+                kp.load(new FileInputStream(kpFile))
+                storeFile file(kp['storeFile'])
+                storePassword kp['storePassword']
+                keyAlias kp['keyAlias']
+                keyPassword kp['keyPassword']
+            }
+        }
+    }
+
     defaultConfig {
         applicationId 'in.p1x.bitwars'
         minSdkVersion 16            // OUYA = Android 4.1 (Jelly Bean), Tegra 3
@@ -31,6 +46,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
         }
     }
 }
