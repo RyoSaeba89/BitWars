@@ -22,9 +22,9 @@ OUYA‑branded font (`media/font/ouya.png`) — but it was never shipped.
 
 ### Source base: the "engine" commit
 
-The repository's `sources/` tree is missing `lib/impact/` — the proprietary
-ImpactJS engine — because a late commit (`ad99fcd "no more engine"`) stripped it
-out, leaving only the minified `release/game.min.js`.
+Upstream's tip is missing `lib/impact/` — the proprietary ImpactJS engine —
+because a late commit (`ad99fcd "no more engine"`) stripped it out, leaving only
+the minified `release/game.min.js`.
 
 For a clean, un‑minified, hackable base we build from the **last commit that
 still contained the engine**:
@@ -34,9 +34,10 @@ still contained the engine**:
 ad99fcd  "no more engine" <-- engine removed here
 ```
 
-The web payload bundled in the APK (`app/src/main/assets/www/`) is the
-`sources/` tree at `2ab5a8a`: `index.html` → `lib/impact/impact.js` +
-`lib/game/main.js`, plus `media/`. All 40 ImpactJS modules referenced by the
+The web payload bundled in the APK (`app/src/main/assets/www/`) is the engine
+tree at `2ab5a8a` (preserved on the `ouya-engine` branch): `index.html` →
+`lib/impact/impact.js` + `lib/game/main.js`, plus `media/`. All 40 ImpactJS
+modules referenced by the
 game resolve to real files, so it loads cleanly.
 
 ---
@@ -222,9 +223,12 @@ a real pad.
 
 ## 7. Reproduce from scratch
 
-1. Stage the web payload from the engine commit:
+1. The web payload is already committed under
+   `ouya/app/src/main/assets/www/`. To regenerate it from scratch, copy the
+   full engine tree (incl. `lib/impact/`) preserved on the `ouya-engine`
+   branch under `sources/`:
    ```sh
-   git checkout 2ab5a8a -- sources
+   git checkout ouya-engine -- sources
    cp -r sources/{index.html,favicon.png,lib,media} ouya/app/src/main/assets/www/
    ```
 2. Put `xwalk_core_library-23.53.589.4.aar` in `ouya/app/libs/`.
