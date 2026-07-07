@@ -26,8 +26,8 @@ android {
         applicationId 'com.ryo.bitwarsouya'
         minSdkVersion 16            // OUYA = Android 4.1 (Jelly Bean), Tegra 3
         targetSdkVersion 21         // Crosswalk 23 targets 21; keep low to avoid runtime-permission model
-        versionCode 2
-        versionName '1.0'           // versionCode 2: applicationId rename to com.ryo.bitwarsouya
+        versionCode 3
+        versionName '1.0'           // versionCode 3: keep literal res paths so the store can extract ouya_icon.png
         ndk {
             // OUYA is armv7 only; drop the 58MB x86 lib from the AAR -> single ~40MB APK
             abiFilters 'armeabi-v7a'
